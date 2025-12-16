@@ -253,6 +253,7 @@ import { useErrorHandling } from '@/composables/useErrorHandling'
 import { t } from '@/i18n'
 import { useSubscription } from '@/platform/cloud/subscription/composables/useSubscription'
 import { performSubscriptionCheckout } from '@/platform/cloud/subscription/utils/subscriptionCheckoutUtil'
+import type { TierKey } from '@/platform/cloud/subscription/utils/subscriptionCheckoutUtil'
 import { isCloud } from '@/platform/distribution/types'
 import type { components } from '@/types/comfyRegistryTypes'
 
