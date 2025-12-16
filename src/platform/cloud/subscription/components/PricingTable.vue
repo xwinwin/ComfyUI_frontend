@@ -250,14 +250,10 @@ import { useI18n } from 'vue-i18n'
 
 import { useFirebaseAuthActions } from '@/composables/auth/useFirebaseAuthActions'
 import { useErrorHandling } from '@/composables/useErrorHandling'
-import { getComfyApiBaseUrl } from '@/config/comfyApi'
 import { t } from '@/i18n'
 import { useSubscription } from '@/platform/cloud/subscription/composables/useSubscription'
+import { performSubscriptionCheckout } from '@/platform/cloud/subscription/utils/subscriptionCheckoutUtil'
 import { isCloud } from '@/platform/distribution/types'
-import {
-  FirebaseAuthStoreError,
-  useFirebaseAuthStore
-} from '@/stores/firebaseAuthStore'
 import type { components } from '@/types/comfyRegistryTypes'
 
 type SubscriptionTier = components['schemas']['SubscriptionTier']
@@ -442,10 +438,7 @@ const handleSubscribe = wrapWithErrorHandlingAsync(async (tierKey: TierKey) => {
     if (isActiveSubscription.value) {
       await accessBillingPortal()
     } else {
-      const response = await initiateCheckout(tierKey)
-      if (response.checkout_url) {
-        window.open(response.checkout_url, '_blank')
-      }
+      await performSubscriptionCheckout(tierKey)
     }
   } finally {
     isLoading.value = false
